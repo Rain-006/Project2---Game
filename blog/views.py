@@ -59,3 +59,22 @@ def delete_player(request, pk):
         return redirect('player_list')
 
     return render(request, 'blog/delete_player.html', {'player': player,  'message': message})
+
+# Авторизация
+def login_player(request):
+    message = ''
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            player = Player.objects.get(username=username, password=password)
+            request.session['player_id'] = player.id
+            return redirect('game')
+        except Player.DoesNotExist:
+            message = 'Неверное имя пользователя или пароль'
+    return render(request, 'blog/login.html', {'message': message})
+
+# Выход
+def logout_player(request):
+    request.session.flush()
+    return redirect('login')
