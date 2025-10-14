@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<h2>Привет, {{ player.username }}!</h2>
+<p>Твоя категория: {{ player.get_category_display }}</p>
+<p>Победы: {{ player.wins }}, Поражения: {{ player.losses }}, Ничьи: {{ player.ties }}</p>
+
+<div class="container">
+    <h1>Rock 🪨 Paper 📄 Scissors ✂️</h1>
+    <div class="container__buttons">
+        <button onclick="play('Rock')">Rock 🪨</button>
+        <button onclick="play('Paper')">Paper 📄</button>
+        <button onclick="play('Scissors')">Scissors ✂️</button>
+    </div>
+</div>
+
+<a href="{% url 'player_list' %}">Назад</a>
+
+<script>
+function play(choice) {
+    fetch(`/api/play/?move=${choice}`)
+        .then(res => res.json())
+        .then(data => {
+            alert(`Computer: ${data.computer}\nResult: ${data.result}\nWins: ${data.wins}, Losses: ${data.losses}, Ties: ${data.ties}`);
+            location.reload();
+        });
+}
+</script>
+{% endblock %}

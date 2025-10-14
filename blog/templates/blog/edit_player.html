@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Редактировать игрока</h2>
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {%  else %}
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="{% url 'player_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

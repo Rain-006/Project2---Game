@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container text-center">
+    <h3>Удалить игрока "{{ player.name }}"?</h3>
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {%  else %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="{% url 'player_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>Список пользователей</h2>
+
+<ul>
+    {% for player in players %}
+        <li>
+            {{ player.username }} — {{ player.get_category_display }} |
+            Победы: {{ player.wins }}, Поражения: {{ player.losses }}, Ничьи: {{ player.ties }}
+
+            <!-- Кнопки действий -->
+            <a href="{% url 'edit_player' player.pk %}" style="margin-left: 10px; color: orange;">Изменить</a> |
+            <a href="{% url 'delete_player' player.pk %}" style="color: red;">Удалить</a>
+        </li>
+    {% empty %}
+        <p>Пока нет игроков.</p>
+    {% endfor %}
+</ul>
+
+<br>
+{% if request.session.player_id %}
+    <!-- Пользователь авторизован - показываем только выход -->
+    <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+{% else %}
+    <!-- Пользователь не авторизован - показываем создание и вход -->
+    <a href="{% url 'create_player' %}">Создать пользователя</a><br>
+    <a href="{% url 'login' %}">Войти в аккаунт</a>
+{% endif %}
+{% endblock %}
