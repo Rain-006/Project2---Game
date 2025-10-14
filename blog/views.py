@@ -78,3 +78,43 @@ def login_player(request):
 def logout_player(request):
     request.session.flush()
     return redirect('login')
+
+# Игра
+def game(request):
+    player_id = request.session.get('player_id')
+    if not player_id:
+        return redirect('login')
+    player = get_object_or_404(Player, id=player_id)
+    return render(request, 'blog/index.html', {'player': player})
+
+# API для обновления статистики
+def api_play(request):
+    player_id = request.session.get('player_id')
+    if not player_id:
+        return JsonResponse({'error': 'not_logged_in'})
+    player = Player.objects.get(id=player_id)
+
+    move = request.GET.get('move')
+    options = ['Rock', 'Paper', 'Scissors']
+    computer = random.choice(options)
+
+    if move == computer:
+        player.ties += 1
+        result = 'Tie'
+    elif (move == 'Rock' and computer == 'Scissors') or \
+         (move == 'Paper' and computer == 'Rock') or \
+         (move == 'Scissors' and computer == 'Paper'):
+        player.wins += 1
+        result = 'You win'
+    else:
+        player.losses += 1
+        result = 'You lose'
+
+    player.save()
+    return JsonResponse({
+        'computer': computer,
+        'result': result,
+        'wins': player.wins,
+        'losses': player.losses,
+        'ties': player.ties
+    })

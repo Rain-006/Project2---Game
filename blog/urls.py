@@ -8,4 +8,6 @@ urlpatterns = [
     path('delete/<int:pk>/', views.delete_player, name='delete_player'),
     path('login/', views.login_player, name='login'),
     path('logout/', views.logout_player, name='logout'),
+    path('game/', views.game, name='game'),
+    path('api/play/', views.api_play, name='api_play'),
     ]
