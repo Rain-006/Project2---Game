@@ -15,6 +15,14 @@ class Player(models.Model):
     wins = models.PositiveIntegerField(default=0)
     losses = models.PositiveIntegerField(default=0)
     ties = models.PositiveIntegerField(default=0)
+    stars = models.PositiveIntegerField(default=0)
 
+    def add_win(self):
+        self.wins += 1
+        # За каждые 3 победы — 1 звезда
+        if self.wins % 3 == 0:
+            self.stars += 1
+        self.save()
+        
     def __str__(self):
         return f"{self.username} ({self.get_category_display()})"

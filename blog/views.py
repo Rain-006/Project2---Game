@@ -99,22 +99,30 @@ def api_play(request):
     computer = random.choice(options)
 
     if move == computer:
-        player.ties += 1
         result = 'Tie'
     elif (move == 'Rock' and computer == 'Scissors') or \
          (move == 'Paper' and computer == 'Rock') or \
          (move == 'Scissors' and computer == 'Paper'):
-        player.wins += 1
-        result = 'You win'
+        result = 'win'
     else:
-        player.losses += 1
-        result = 'You lose'
+        result = 'loss'
 
-    player.save()
+    # 👇 добавлено — начисление звёзд и подсчёт статистики
+    if result == 'win':
+        player.add_win()  # ✅ 4 пробела перед этой строкой
+    elif result == 'loss':
+        player.losses += 1
+        player.save()
+    else:
+        player.ties += 1
+        player.save()
+    # 👆 конец добавленного
+
     return JsonResponse({
         'computer': computer,
         'result': result,
         'wins': player.wins,
         'losses': player.losses,
-        'ties': player.ties
+        'ties': player.ties,
+        'stars': getattr(player, 'stars', 0)
     })

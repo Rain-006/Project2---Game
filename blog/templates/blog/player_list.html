@@ -1,30 +1,79 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<h2>Список пользователей</h2>
+<div class="Container-List">
+<div class="Container-List__title">
+    <h2>Список пользователей</h2>
+</div>    
 
-<ul>
+<div class="List">
     {% for player in players %}
-        <li>
-            {{ player.username }} — {{ player.get_category_display }} |
-            Победы: {{ player.wins }}, Поражения: {{ player.losses }}, Ничьи: {{ player.ties }}
+            <div class="List__title">
+                <h3>{{ player.username }} — {{ player.get_category_display }}</h3>
+            </div>
+            <div class="List__wlt">
+                <div class="counter"><p style="color: green;">Победы:</p> {{ player.wins }}, <p style="color: red;">Поражения:</p> {{ player.losses }}, <p style="color: #646363;">Ничьи:</p> {{ player.ties }}, <p style="color: gold;">Звезды:</p> {{ player.stars }}</div>
+            </div>
 
             <!-- Кнопки действий -->
-            <a href="{% url 'edit_player' player.pk %}" style="margin-left: 10px; color: orange;">Изменить</a> |
-            <a href="{% url 'delete_player' player.pk %}" style="color: red;">Удалить</a>
-        </li>
+             <div class="List__button-actions Buttons">
+                 <div class="Buttons__change">
+                     <a href="{% url 'edit_player' player.pk %}" style="color: white;">Изменить</a>
+                 </div>
+                 <div class="Buttons__delete">
+                     <a href="{% url 'delete_player' player.pk %}" style="color: white;">Удалить</a>
+                 </div>
+             </div>
     {% empty %}
         <p>Пока нет игроков.</p>
     {% endfor %}
-</ul>
-
-<br>
-{% if request.session.player_id %}
-    <!-- Пользователь авторизован - показываем только выход -->
-    <a href="{% url 'logout' %}">Выйти из аккаунта</a>
-{% else %}
-    <!-- Пользователь не авторизован - показываем создание и вход -->
-    <a href="{% url 'create_player' %}">Создать пользователя</a><br>
-    <a href="{% url 'login' %}">Войти в аккаунт</a>
-{% endif %}
+</div>
+</div>
+<style>
+    .Container-List {
+        background-color: #ffffff;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 25px 25px 25px 25px;
+        padding: 30px;
+        font-family: UNCAGE;
+    }
+    .Container-List__title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+    .counter {
+        display: flex;
+        align-items: center;
+    }
+    .counter p {
+        margin: 0px 5px 0px 10px;
+    }
+    .List__wlt {
+        margin: 10px 0px 10px 0px;
+    }
+    .Buttons {
+        display: flex;
+    }
+    .Buttons__change {
+        margin: 25px 0px 30px 0px;
+    }
+    .Buttons__delete {
+        margin: 25px 0px 25px 0px;
+    }
+    .Buttons__change a {
+        margin-right: 40px;
+        padding: 15px;
+        background-color: #b6452c;
+    }
+    .Buttons__delete a {
+        margin-right: 40px;
+        padding: 15px;
+        background-color: #b6452c;
+    }
+</style>
 {% endblock %}

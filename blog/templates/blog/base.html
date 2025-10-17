@@ -3,38 +3,67 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Блог{% endblock %}</title>
+    <title>{% block title %}Игра{% endblock %}</title>
     <!-- Bootstrap CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'player_list' %}">Игроки</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'game' %}">Играть 🎮</a>
+<header>
+    <ul class="header">
+        <li class="players">
+          <a class="players-button" href="{% url 'player_list' %}">Игроки</a>
         </li>
-        <li class="nav-item">
+        <li class="play">
+          <a class="play-button" href="{% url 'game' %}">Играть 🎮</a>
+        </li>
+        <li class="login-logout">
           {% if request.session.player_id %}
-    <!-- Пользователь авторизован - показываем только выход -->
-          <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+          <!-- Пользователь авторизован - показываем только выход -->
+          <a class="logout" href="{% url 'logout' %}">Выйти</a>
           {% else %}
-    <!-- Пользователь не авторизован - показываем создание и вход -->
-          <a class="nav-link" href="{% url 'create_player' %}">Регистрация</a>
+          <!-- Пользователь не авторизован - показываем создание и вход -->
+          <a class="login" href="{% url 'login' %}">Войти</a>
+          <a class="reg" href="{% url 'create_player' %}">Регистрация</a>
           {% endif %}
         </li>
       </ul>
-    </div>
-  </div>
-</nav>
+</header>
 
 <div class="container mt-4">
     {% block content %}
     {% endblock %}
 </div>
 
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background-color: #523634;
+  }
+  .header {
+    width: 100%;
+    height: 70px;
+    background-color: #301b28;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: UNCAGE;
+  }
+  li {
+    list-style: none;
+    margin: 0 20px 0 20px;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  .login {
+    margin-right: 10px;
+  }
+
+</style>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
