@@ -1,10 +1,58 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<h2>Создание пользователя</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Создать</button>
-</form>
-<a href="{% url 'player_list' %}">Назад</a>
+<div class="container-create">
+    <div class="container-create__body">
+    <h2>Создание пользователя</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>{{ form.username }}</p>
+        <p>{{ form.age }}</p>
+        <p>{{ form.category }}</p>
+        <p>{{ form.password }}</p>
+        <div class="button-actions">
+            <button type="submit" class="button-actions__create" style="font-family: UNCAGE;">Создать</button>
+            <a href="{% url 'player_list' %}" class="button-actions__back" style="color: black;">Назад</a>
+        </div>
+    </form>
+    </div>
+</div>
+<style>
+    .container-create {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 85vh;
+    }
+    .container-create__body {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 50px 150px 50px 150px;
+        border-radius: 20px;
+        align-items: center;
+        justify-content: center;
+        font-family: UNCAGE;
+    }
+    .user-name {
+        margin: 20px 0px 10px 0px;
+        padding: 10px;
+        font-family: UNCAGE;
+    }
+    .user-age, .user-category, .user-password {
+        margin: 0px 0px 15px 0px;
+        padding: 10px;
+        font-family: UNCAGE;
+    }
+    .button-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+    .button-actions__create {
+        padding: 15px;
+        background-color: #b6452c;
+        color: white;
+    }
+</style>
 {% endblock %}

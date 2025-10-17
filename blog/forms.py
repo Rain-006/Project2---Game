@@ -6,5 +6,19 @@ class PlayerForm(forms.ModelForm):
         model = Player
         fields = ['username', 'age', 'category', 'password']
         widgets = {
-            'password': forms.PasswordInput(),
+            'username': forms.TextInput(attrs={
+                'class': 'user-name',
+                'placeholder': 'Введите имя'
+            }),
+            'age': forms.NumberInput(attrs={
+                'class': 'user-age',
+                'placeholder': 'Введите возраст'
+            }),
+            'category': forms.Select(attrs={
+                'class': 'user-category'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'user-password',
+                'placeholder': 'Введите пароль'
+            }),
         }
