@@ -1,24 +1,29 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<div class="container-delete">
-    <div class="container-delete__body">
-        <h3>Удалить игрока "{{ player.username }}"?</h3>
-        {% if message %}
-        <p style="color: red; margin-top: 15px;">{{ message }}</p>
-        {%  else %}
-        <form method="post">
-            {% csrf_token %}
-            <div class="button-actions">
-                <button type="submit" class="button-actions__delete">Удалить</button>
-                <a href="{% url 'player_list' %}" class="button-actions__cancel" style="color: black;">Отмена</a>
-            </div>
-        </form>
-        {% endif %}
+<body>
+    <div class="container-delete">
+        <div class="container-delete__body">
+            <h3>Удалить игрока "{{ player.username }}"?</h3>
+            {% if message %}
+            <p style="color: red; margin-top: 15px;">{{ message }}</p>
+            {%  else %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="button-actions">
+                    <button type="submit" class="button-actions__delete">Удалить</button>
+                    <a href="{% url 'player_list' %}" class="button-actions__cancel" style="color: black;">Отмена</a>
+                </div>
+            </form>
+            {% endif %}
+        </div>
     </div>
-</div>
-
+</body>
+    
 <style>
+    body {
+    background-color: #523634;
+    }
     .container-delete {
         display: flex;
         justify-content: center;

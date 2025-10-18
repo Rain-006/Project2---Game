@@ -1,22 +1,49 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block content %}
-<h1>Добро пожаловать в игру {{ player.username }}! Rock ✊ Paper ✋ Scissors ✌️</h1>
-<p>Твоя категория: {{ player.get_category_display }}</p>
-<p>Победы: {{ player.wins }}, Поражения: {{ player.losses }}, Ничьи: {{ player.ties }}</p>
-
-<div class="container">
-    <div class="container__buttons">
-        <button onclick="play('Rock')">Rock 🪨</button>
-        <button onclick="play('Paper')">Paper 📄</button>
-        <button onclick="play('Scissors')">Scissors ✂️</button>
+<body>
+    <div class="container">
+        <h1 class="container__title">Добро пожаловать в игру {{ player.username }}!</h1>
+        <div class="container__buttons button">
+            <button class="button__Rock" onclick="play('Rock')" style="background-color: #646363; color: white;">Rock</button>
+            <button class="button__Paper" onclick="play('Paper')" style="background-color: white;">Paper</button>
+            <button class="button__Scissors" onclick="play('Scissors')" style="background-color: yellow;">Scissors</button>
+        </div>
+        <div class="container__wlt"><p style="color: green;">Победы:</p> {{ player.wins }}, <p style="color: red;">Поражения:</p> {{ player.losses }}, <p style="color: #646363;">Ничьи:</p> {{ player.ties }}, <p style="color: gold;">Звезды:</p> {{ player.stars }}</div>
+        <a class="container__cancel" href="{% url 'player_list' %}">Назад</a>
     </div>
-</div>
+</body>
 
-<a href="{% url 'player_list' %}">Назад</a>
 
 <style>
-
+    body {
+        background-color: bisque;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 85vh;
+        font-family: UNCAGE;
+    }
+    .button {
+        padding-top: 30px;
+    }
+    .button button {
+        padding: 25px;
+        margin: 15px;
+        color: black;
+        cursor: pointer;
+        font-family: UNCAGE;
+    }
+    .container__wlt {
+        display: flex;
+        padding: 30px;
+    }
+    .container__wlt p {
+        margin: 0px 5px 0px 10px;
+    }
 </style>
 
 <script>
@@ -24,7 +51,7 @@ function play(choice) {
     fetch(`/api/play/?move=${choice}`)
         .then(res => res.json())
         .then(data => {
-            alert(`Computer: ${data.computer}\nResult: ${data.result}\nWins: ${data.wins}, Losses: ${data.losses}, Ties: ${data.ties}`);
+            alert(`Ты выбрал: ${data.computer}\nКомпьютер выбрал: ${data.computer}\nРезультат: ${data.result}\nПобеды: ${data.wins}, Поражения: ${data.losses}, Ничьи: ${data.ties}`);
             location.reload();
         });
 }

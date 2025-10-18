@@ -1,35 +1,40 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<div class="Container-List">
-<div class="Container-List__title">
-    <h2>Список пользователей</h2>
-</div>    
-
-<div class="List">
-    {% for player in players %}
+<body>
+    <div class="Container-List">
+        <div class="Container-List__title">
+            <h2>Список пользователей</h2>
+        </div>    
+        
+        <div class="List">
+            {% for player in players %}
             <div class="List__title">
                 <h3>{{ player.username }} — {{ player.get_category_display }}</h3>
             </div>
             <div class="List__wlt">
                 <div class="counter"><p style="color: green;">Победы:</p> {{ player.wins }}, <p style="color: red;">Поражения:</p> {{ player.losses }}, <p style="color: #646363;">Ничьи:</p> {{ player.ties }}, <p style="color: gold;">Звезды:</p> {{ player.stars }}</div>
             </div>
-
+            
             <!-- Кнопки действий -->
-             <div class="List__button-actions Buttons">
-                 <div class="Buttons__change">
-                     <a href="{% url 'edit_player' player.pk %}" style="color: white;">Изменить</a>
-                 </div>
-                 <div class="Buttons__delete">
-                     <a href="{% url 'delete_player' player.pk %}" style="color: white;">Удалить</a>
-                 </div>
-             </div>
-    {% empty %}
-        <p>Пока нет игроков.</p>
-    {% endfor %}
-</div>
-</div>
+            <div class="List__button-actions Buttons">
+                <div class="Buttons__change">
+                    <a href="{% url 'edit_player' player.pk %}" style="color: white;">Изменить</a>
+                </div>
+                <div class="Buttons__delete">
+                    <a href="{% url 'delete_player' player.pk %}" style="color: white;">Удалить</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>Пока нет игроков.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
 <style>
+    body {
+    background-color: #523634;
+    }
     .Container-List {
         background-color: #ffffff;
         border-radius: 20px;
