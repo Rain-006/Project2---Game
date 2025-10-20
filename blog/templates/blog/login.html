@@ -1,19 +1,24 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<div class="container-login">
-    <div class="container-login__body">
-    <h2>Вход</h2>
-    <form method="post" class="form-login">
-        {% csrf_token %}
-        <input class="user-name" type="text" name="username" placeholder="Имя пользователя" style="font-family: UNCAGE;" required>
-        <input class="user-password" type="password" name="password" placeholder="Пароль" style="font-family: UNCAGE;" required>
-        <button type="submit" class="enter" style="font-family: UNCAGE;">Войти</button>
-    </form>
-    <p style="color:red; margin-top: 20px;">{{ message }}</p>
+<body>
+    <div class="container-login">
+        <div class="container-login__body">
+            <h2>Вход</h2>
+            <form method="post" class="form-login">
+                {% csrf_token %}
+                <input class="user-name" type="text" name="username" placeholder="Имя пользователя" style="font-family: UNCAGE;" required>
+                <input class="user-password" type="password" name="password" placeholder="Пароль" style="font-family: UNCAGE;" required>
+                <button type="submit" class="enter" style="font-family: UNCAGE;">Войти</button>
+            </form>
+            <p style="color:red; margin-top: 20px;">{{ message }}</p>
+        </div>
     </div>
-</div>
+</body>
 
 <style>
+    body {
+    background-color: #523634;
+    }
     .container-login {
         display: flex;
         align-items: center;
