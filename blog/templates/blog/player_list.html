@@ -1,6 +1,9 @@
 {% extends 'blog/base.html' %}
-
+{% load static %}
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'blog/css/player_list.css' %}" >
+</head>
 <body>
     <div class="Container-List">
         <div class="Container-List__title">
@@ -31,54 +34,4 @@
         </div>
     </div>
 </body>
-<style>
-    body {
-    background-color: #523634;
-    }
-    .Container-List {
-        background-color: #ffffff;
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 25px 25px 25px 25px;
-        padding: 30px;
-        font-family: UNCAGE;
-    }
-    .Container-List__title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 25px;
-    }
-    .counter {
-        display: flex;
-        align-items: center;
-    }
-    .counter p {
-        margin: 0px 5px 0px 10px;
-    }
-    .List__wlt {
-        margin: 10px 0px 10px 0px;
-    }
-    .Buttons {
-        display: flex;
-    }
-    .Buttons__change {
-        margin: 25px 0px 30px 0px;
-    }
-    .Buttons__delete {
-        margin: 25px 0px 25px 0px;
-    }
-    .Buttons__change a {
-        margin-right: 40px;
-        padding: 15px;
-        background-color: #b6452c;
-    }
-    .Buttons__delete a {
-        margin-right: 40px;
-        padding: 15px;
-        background-color: #b6452c;
-    }
-</style>
 {% endblock %}

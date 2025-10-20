@@ -1,0 +1,37 @@
+body {
+    background-color: #523634;
+    }
+    .container-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 80vh;
+    }
+    .container-login__body {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 50px 150px 50px 150px;
+        border-radius: 20px;
+        align-items: center;
+        justify-content: center;
+        font-family: UNCAGE;
+    }
+    .form-login {
+        display: flex;
+        flex-direction: column;
+    }
+    .user-name {
+        margin: 20px 0px 10px 0px;
+        padding: 10px;
+    }
+    .user-password {
+        margin: 0px 0px 15px 0px;
+        padding: 10px;
+    }
+    .enter {
+        padding: 15px;
+        background-color: #b6452c;
+        color: white;
+    }
