@@ -1,6 +1,9 @@
 {% extends 'blog/base.html' %}
-
+{% load static %}
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'blog/css/delete_player.css' %}" >
+</head>
 <body>
     <div class="container-delete">
         <div class="container-delete__body">
@@ -19,39 +22,4 @@
         </div>
     </div>
 </body>
-    
-<style>
-    body {
-    background-color: #523634;
-    }
-    .container-delete {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 85vh;
-    }
-    .container-delete__body {
-        display: flex;
-        flex-direction: column;
-        background-color: white;
-        padding: 50px 150px 50px 150px;
-        border-radius: 20px;
-        align-items: center;
-        justify-content: center;
-        font-family: UNCAGE;
-    }
-    .button-actions {
-        margin: 20px 0px 10px 0px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-    }
-    .button-actions__delete {
-        padding: 15px;
-        background-color: #b6452c;
-        color: white;
-        font-family: UNCAGE;
-    }
-</style>
 {% endblock %}

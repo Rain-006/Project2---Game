@@ -1,6 +1,9 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}" >
+</head>
 <body>
     <div class="container">
         <h1 class="container__title">Добро пожаловать в игру {{ player.username }}!</h1>
@@ -13,45 +16,12 @@
         <a class="container__cancel" href="{% url 'player_list' %}">Назад</a>
     </div>
 </body>
-
-
-<style>
-    body {
-        background-color: bisque;
-    }
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 85vh;
-        font-family: UNCAGE;
-    }
-    .button {
-        padding-top: 30px;
-    }
-    .button button {
-        padding: 25px;
-        margin: 15px;
-        color: black;
-        cursor: pointer;
-        font-family: UNCAGE;
-    }
-    .container__wlt {
-        display: flex;
-        padding: 30px;
-    }
-    .container__wlt p {
-        margin: 0px 5px 0px 10px;
-    }
-</style>
-
 <script>
 function play(choice) {
     fetch(`/api/play/?move=${choice}`)
         .then(res => res.json())
         .then(data => {
-            alert(`Ты выбрал: ${data.computer}\nКомпьютер выбрал: ${data.computer}\nРезультат: ${data.result}\nПобеды: ${data.wins}, Поражения: ${data.losses}, Ничьи: ${data.ties}`);
+            alert(`Ты выбрал: ${choice}\nКомпьютер выбрал: ${data.computer}\nРезультат: ${data.result}\nПобеды: ${data.wins}, Поражения: ${data.losses}, Ничьи: ${data.ties}`);
             location.reload();
         });
 }
