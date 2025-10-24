@@ -7,22 +7,115 @@
 <body>
     <div class="container">
         <h1 class="container__title">Добро пожаловать в игру {{ player.username }}!</h1>
+        <h3 style="margin-top: 15px;">Сделай свой первый ход!</h3>
         <div class="container__buttons button">
             <button class="button__Rock" onclick="play('Rock')" style="background-color: #646363; color: white;">Rock</button>
             <button class="button__Paper" onclick="play('Paper')" style="background-color: white;">Paper</button>
             <button class="button__Scissors" onclick="play('Scissors')" style="background-color: yellow;">Scissors</button>
         </div>
-        <div class="container__wlt"><p style="color: green;">Победы:</p> {{ player.wins }}, <p style="color: red;">Поражения:</p> {{ player.losses }}, <p style="color: #646363;">Ничьи:</p> {{ player.ties }}, <p style="color: gold;">Звезды:</p> {{ player.stars }}</div>
-        <a class="container__cancel" href="{% url 'player_list' %}">Назад</a>
     </div>
+    <div id="result-area" style="margin-top:20px; text-align:center;"></div>
 </body>
 <script>
-function play(choice) {
+    function play(choice) {
     fetch(`/api/play/?move=${choice}`)
         .then(res => res.json())
         .then(data => {
-            alert(`Ты выбрал: ${choice}\nКомпьютер выбрал: ${data.computer}\nРезультат: ${data.result}\nПобеды: ${data.wins}, Поражения: ${data.losses}, Ничьи: ${data.ties}`);
-            location.reload();
+            const baseStatic = "{% static 'blog/images/' %}";
+            const mapLower = {
+                'Rock': 'rock',
+                'Paper': 'paper',
+                'Scissors': 'scissors'
+            };
+
+            const playerKey = mapLower[choice] || choice.toLowerCase();
+            const computerKey = mapLower[data.computer] || (data.computer || '').toLowerCase();
+
+            const playerImg = baseStatic + 'player_' + playerKey + '.png';
+            const computerImg = baseStatic + 'computer_' + computerKey + '.png';
+
+            let resultText = '';
+            const r = (data.result || '').toString().toLowerCase();
+            if (r.includes('win')) resultText = 'Ты выиграл';
+            else if (r.includes('loss') || r.includes('lose')) resultText = 'Ты проиграл';
+            else resultText = 'Ничья';
+
+            const html = `
+                <div class="result-choices" style="display:flex;justify-content:center;align-items:center;gap:40px;">
+                    <div class="player-block" style="text-align:center;">
+                        <div style="font-weight:bold;margin-bottom:6px;">Ты</div>
+                        <img class="slide-in-left" src="${playerImg}" alt="${choice}" style="width:120px;height:auto;">
+                    </div>
+                    <div class="vs" style="font-size:24px;color:#666;">vs</div>
+                    <div class="computer-block" style="text-align:center;">
+                        <div style="font-weight:bold;margin-bottom:6px;">Компьютер</div>
+                        <img class="slide-in-right" src="${computerImg}" alt="${data.computer}" style="width:120px;height:auto;">
+                    </div>
+                </div>
+
+                <div class="result-text" style="margin-top:16px;font-size:20px;font-weight:600;">
+                    ${resultText}
+                </div>
+
+                <div class="stats">
+                    <p style="color: green;">Победы: </p> ${data.wins}, <p style="color: red;">Поражения:</p> ${data.losses}, <p style="color: #646363;">Ничьи:</p> ${data.ties}, <p style="color: gold;">Звезды:</p> ${data.stars || 0}
+                </div>
+
+                <a class="container__cancel" href="{% url 'player_list' %}">Назад</a>
+
+                <style>
+                    .stats {
+                        display: flex;
+                        flex-direction: row;
+                        padding: 30px;
+                    }
+                    .stats p {
+                        margin: 0px 5px 0px 10px;
+                    }
+                    .slide-in-left {
+                        width: 300px;
+                        height: auto;
+                        transform: translateX(-100%);
+                        opacity: 0;
+                        animation: SlideInLeft 0.5s ease-out forwards;
+                    }
+                    @keyframes SlideInLeft {
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                    .slide-in-right {
+                        width: 300px;
+                        height: auto;
+                        transform: translateX(100%);
+                        opacity: 0;
+                        animation: SlideInRight 0.5s ease-out forwards;
+                    }
+                    @keyframes SlideInRight {
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                </style>
+            `;
+
+            document.getElementById('result-area').innerHTML = html;
+
+            // небольшая анимация: вспышка при появлении
+            const ra = document.getElementById('result-area');
+            ra.style.opacity = 0;
+            ra.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                ra.style.transition = 'opacity 200ms ease, transform 200ms ease';
+                ra.style.opacity = 1;
+                ra.style.transform = 'scale(1)';
+            }, 50);
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Ошибка соединения с сервером');
         });
 }
 </script>
