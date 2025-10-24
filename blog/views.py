@@ -84,8 +84,40 @@ def game(request):
     player_id = request.session.get('player_id')
     if not player_id:
         return redirect('login')
+
     player = get_object_or_404(Player, id=player_id)
-    return render(request, 'blog/index.html', {'player': player})
+    choices = ['Rock', 'Paper', 'Scissors']
+    result = None
+    player_choice = None
+    computer_choice = None
+
+    if request.method == 'POST':
+        player_choice = request.POST.get('move')
+        computer_choice = random.choice(choices)
+
+        if player_choice == computer_choice:
+            result = 'Ничья'
+            player.ties += 1
+        elif (player_choice == 'Rock' and computer_choice == 'Scissors') or \
+             (player_choice == 'Paper' and computer_choice == 'Rock') or \
+             (player_choice == 'Scissors' and computer_choice == 'Paper'):
+            result = 'Ты победил!'
+            player.wins += 1
+            # каждые 3 победы = 1 звезда
+            if player.wins % 3 == 0:
+                player.stars += 1
+        else:
+            result = 'Ты проиграл!'
+            player.losses += 1
+
+        player.save()
+
+    return render(request, 'blog/index.html', {
+        'player': player,
+        'result': result,
+        'player_choice': player_choice,
+        'computer_choice': computer_choice
+    })
 
 # API для обновления статистики
 def api_play(request):
@@ -104,19 +136,11 @@ def api_play(request):
          (move == 'Paper' and computer == 'Rock') or \
          (move == 'Scissors' and computer == 'Paper'):
         result = 'win'
+        player.add_win()
     else:
         result = 'loss'
-
-    # 👇 добавлено — начисление звёзд и подсчёт статистики
-    if result == 'win':
-        player.add_win()  # ✅ 4 пробела перед этой строкой
-    elif result == 'loss':
         player.losses += 1
         player.save()
-    else:
-        player.ties += 1
-        player.save()
-    # 👆 конец добавленного
 
     return JsonResponse({
         'computer': computer,
