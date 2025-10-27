@@ -40,9 +40,19 @@ body {
         margin-right: 40px;
         padding: 15px;
         background-color: #b6452c;
+        text-decoration: none;
     }
     .Buttons__delete a {
         margin-right: 40px;
         padding: 15px;
         background-color: #b6452c;
+        text-decoration: none;
+    }
+    .Buttons__change a:hover {
+        background-color: #a9432d;
+        box-shadow: #b6452c;
+    }
+    .Buttons__delete a:hover {
+        background-color: #a9432d;
+        box-shadow: #b6452c;
     }

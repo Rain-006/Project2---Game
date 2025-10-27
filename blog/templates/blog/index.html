@@ -2,16 +2,16 @@
 {% load static %}
 {% block content %}
 <head>
-    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}" >
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}?v=2">
 </head>
 <body>
     <div class="container">
         <h1 class="container__title">Добро пожаловать в игру {{ player.username }}!</h1>
         <h3 style="margin-top: 15px;">Сделай свой первый ход!</h3>
         <div class="container__buttons button">
-            <button class="button__Rock" onclick="play('Rock')" style="background-color: #646363; color: white;">Rock</button>
-            <button class="button__Paper" onclick="play('Paper')" style="background-color: white;">Paper</button>
-            <button class="button__Scissors" onclick="play('Scissors')" style="background-color: yellow;">Scissors</button>
+            <button class="button__Rock" onclick="play('Rock')" style="color: white;">Rock</button>
+            <button class="button__Paper" onclick="play('Paper')">Paper</button>
+            <button class="button__Scissors" onclick="play('Scissors')">Scissors</button>
         </div>
     </div>
     <div id="result-area" style="margin-top:20px; text-align:center;"></div>
@@ -44,12 +44,12 @@
                 <div class="result-choices" style="display:flex;justify-content:center;align-items:center;gap:40px;">
                     <div class="player-block" style="text-align:center;">
                         <div style="font-weight:bold;margin-bottom:6px;">Ты</div>
-                        <img class="slide-in-left" src="${playerImg}" alt="${choice}" style="width:120px;height:auto;">
+                        <img class="slide-in-left" src="${playerImg}" alt="${choice}" style="width:240px;height:auto;">
                     </div>
                     <div class="vs" style="font-size:24px;color:#666;">vs</div>
                     <div class="computer-block" style="text-align:center;">
                         <div style="font-weight:bold;margin-bottom:6px;">Компьютер</div>
-                        <img class="slide-in-right" src="${computerImg}" alt="${data.computer}" style="width:120px;height:auto;">
+                        <img class="slide-in-right" src="${computerImg}" alt="${data.computer}" style="width:240px;height:auto;">
                     </div>
                 </div>
 
@@ -63,7 +63,20 @@
 
                 <a class="container__cancel" href="{% url 'player_list' %}">Назад</a>
 
+                <div class="anchor"></div>
+
                 <style>
+                    .anchor {
+                        height: 50px
+                    }
+                    .container__cancel {
+                        text-decoration: none;
+                        color: white;
+                    }
+                    .container__cancel:hover {
+                        text-shadow: 0 0 50px white;
+                        transition: 0.5s;
+                    }
                     .stats {
                         display: flex;
                         flex-direction: row;

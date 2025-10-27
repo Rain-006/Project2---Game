@@ -12,20 +12,19 @@
         <li class="players">
           <a class="players-button" href="{% url 'player_list' %}">Игроки</a>
         </li>
-        <a class="play-button" href="{% url 'game' %}">
-        <li class="play">Играть</li>
-        </a>
+        <li class="play">
+          <a class="play-button" href="{% url 'game' %}">Играть</a>
+        </li>
+
         <li class="login-logout">
           {% if request.session.player_id %}
-          <!-- Пользователь авторизован - показываем только выход -->
-          <a class="logout" href="{% url 'logout' %}">Выйти</a>
+            <a class="logout" href="{% url 'logout' %}">Выйти</a>
           {% else %}
-          <!-- Пользователь не авторизован - показываем создание и вход -->
-          <a class="login" href="{% url 'login' %}">Войти</a>
-          <a class="reg" href="{% url 'create_player' %}">Регистрация</a>
+            <a class="login" href="{% url 'login' %}">Войти</a>
+            <a class="reg" href="{% url 'create_player' %}">Регистрация</a>
           {% endif %}
         </li>
-      </ul>
+    </ul>
 </header>
 
 <div class="container mt-4">
